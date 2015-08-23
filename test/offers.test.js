@@ -11,17 +11,17 @@ var User = require("../app/models/user");
 describe('Offers', function() {
   var token;
 
-  before(function() {
+  before(function(done) {
     var user = new User({
-      email: 'me@mrako.com',
+      email: 'other@mrako.com',
       password: 'test'
     });
 
-    user.save(function(err, results) {
-    });
-
-    token = jwt.sign(user, config.secret, {
-      expiresInMinutes: 1440 // expires in 24 hours
+    user.save(function(err, user1) {
+      user1.token = jwt.sign(user1, config.secret);
+      token = user1.token;
+      user1.save(function(err, result) {});
+      done();
     });
   });
 
@@ -31,7 +31,7 @@ describe('Offers', function() {
 
   it('returns a list of offers', function(done) {
     request(app)
-      .post('/offers')
+      .get('/offers')
       .set('Authorization', 'Bearer ' + token)
       .end(function(err, res) {
         assert.equal(res.statusCode, 200);
