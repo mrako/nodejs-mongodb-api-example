@@ -2,13 +2,15 @@
 
 var mongoose = require('mongoose');
 
+var User = require('../app/models/user');
 var Offer = require('../app/models/offer');
 
 module.exports = {
   clear: function() {
+    User.remove({}, function(err) {});
     Offer.remove({}, function(err) {});
   },
-  create: function() {
+  createOffer: function() {
     Offer.create({
       id: '11:0',
       model: {

@@ -1,42 +1,35 @@
 var assert = require('assert');
-var superagent = require('superagent');
-var status = require('http-status');
-var mongoose = require('mongoose');
 
-var database = require('./database');
-mongoose.connect(database.url);
+var request = require('supertest');
 
-var server = require('../app');
+var app = require('../app');
 
-var seeds = require('./seeds');
-
-
-var port = 9999;
-var endpoint = "http://localhost:" + port;
+var User = require("../app/models/user");
 
 describe('offers', function() {
-  var app;
- 
-  before(function() {
-    seeds.clear();
-    seeds.create();
-    app = server.listen(port);
-  });
- 
-  after(function() {
-    seeds.clear();
-    app.close();
-  });
- 
-  it('returns a list of offers', function(done) {
-    superagent.get(endpoint + '/offers').end(function(err, res) {
-      assert.ifError(err);
-      assert.equal(res.status, status.OK);
-      var result = JSON.parse(res.text);
 
-      assert.equal(result.length, 1);
-      assert.equal(result[0].model.name, 'kahvinkeitin');
-      done();
+  var app;
+
+  before(function(done) {
+    var user = new User({
+      email: 'me@mrako.com',
+      password: 'test'
     });
+
+  });
+
+  after(function() {
+    User.collection.drop();
+  });
+
+  it('returns a list of offers', function(done) {
+    request(app)
+      .post('/offers')
+      .set('Authorization', 'Bearer ' + token)
+      .end(function (err, res) {
+        assert.equal(res.statusCode, 200);
+        console.log(res.body);
+      });
+      done();
   });
 });
