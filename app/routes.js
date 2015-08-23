@@ -13,28 +13,11 @@ var Offer = require('./models/offer');
 module.exports = function(app) {
 
   passport.use(new BearerStrategy(function(token, done) {
-    // check header or url parameters or post parameters for token
-    var token = req.body.token || req.param('token') || req.headers['x-access-token'];
-
-    // decode token
-    if (token) {
-      jwt.verify(token, config.jwt_secret, function(err, decoded) {      
-        if (err) {
-          return done(err);
-        } else {
-          return done(null, user, {
-            scope: 'all'
-          });
-        }
-      });
-    } else {
-      return done(null, false);
-
-      /*return res.status(403).send({ 
-        success: false, 
-        message: 'No token provided.'
-      });*/
-    }
+    User.findOne({ token: token }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) { return done(null, false); }
+      return done(null, user, { scope: 'all' });
+    });
   }));
 
   app.post('/login', function(req, res) {

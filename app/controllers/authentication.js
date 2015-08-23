@@ -15,22 +15,19 @@ var auth = {
       if (err) {
         res.json({
           type: false,
-          data: 'Error occured: ' + err
+          data: "Error occured: " + err
         });
       } else {
         if (user) {
-          var token = jwt.sign(user, config.jwt_secret, {
-            expiresInMinutes: 1440 // expires in 24 hours
-          });
-
           res.json({
-            success: true,
-            token: token
+            type: true,
+            data: user,
+            token: user.token
           });
         } else {
           res.json({
             type: false,
-            data: 'Incorrect email/password'
+            data: "Incorrect email/password"
           });
         }
       }
@@ -44,20 +41,20 @@ var auth = {
       if (err) {
         res.json({
           type: false,
-          data: 'Error occured: ' + err
+          data: "Error occured: " + err
         });
       } else {
         if (user) {
           res.json({
             type: false,
-            data: 'User already exists!'
+            data: "User already exists!"
           });
         } else {
           var userModel = new User();
           userModel.email = req.body.email;
           userModel.password = req.body.password;
           userModel.save(function(err, user) {
-            user.token = jwt.sign(user, config.jwt_secret);
+            user.token = jwt.sign(user, config.secret);
             user.save(function(err, user1) {
               res.json({
                 type: true,
@@ -65,7 +62,7 @@ var auth = {
                 token: user1.token
               });
             });
-          });
+          })
         }
       }
     });

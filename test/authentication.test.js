@@ -1,16 +1,9 @@
 var assert = require('assert');
-var mongoose = require('mongoose');
 var request = require('supertest');
 
 var app = require('../app');
 
-
-var database = require('./database');
-mongoose.connect(database.url);
-
-
 var User = require("../app/models/user");
-
 
 describe("Authentication", function() {
 
