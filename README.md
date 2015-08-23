@@ -19,10 +19,8 @@
 
 ## Requests
 
-    curl --data '{"email":"me@mrako.com", "password":"test"}' http://localhost:9000/signin
-
     curl --data "email=me@mrako.com&password=test" http://localhost:9000/signin
     curl --data "email=me@mrako.com&password=test" http://localhost:9000/login
 
-    curl -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfX3YiOjAsInBhc3N3b3JkIjoidGVzdCIsImVtYWlsIjoibWVAbXJha28uY29tIiwiX2lkIjoiNTVkOWNjOWZkNzcwODQ2YjI0NTVmNTNkIn0.1_TXqg3ZsK8pRWx0oEcTfsZerqrfmwoAxxpKj4ruxq8" http://localhost:9000/offers
+    curl -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfX3YiOjAsInBhc3N3b3JkIjoidGVzdCIsImVtYWlsIjoibWVAa2l2aWt1bnUuY29tIiwiX2lkIjoiNTVkYTA0ZDYwODRlMjE5MzI2NTllMTYwIn0.u76LBZUGFwfo_xXla8Jmc6hXAyX_R7osZvrjnsFOMoY" http://localhost:9000/offers
 

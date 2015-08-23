@@ -36,7 +36,7 @@ module.exports = function(app) {
         res.send(err);
       }
 
-      res.json(offers);
+      res.json({offers: offers});
     });
   });
 };

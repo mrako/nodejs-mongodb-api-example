@@ -6,35 +6,42 @@ var config = require('../app/config');
 
 var app = require('../app');
 
+var seeds = require('./seeds');
+
+var Offer = require("../app/models/offer");
 var User = require("../app/models/user");
 
 describe('Offers', function() {
   var token;
 
   before(function(done) {
+    seeds.clear();
+    seeds.createOffer();
+
     var user = new User({
       email: 'other@mrako.com',
       password: 'test'
     });
 
-    user.save(function(err, user1) {
-      user1.token = jwt.sign(user1, config.secret);
-      token = user1.token;
-      user1.save(function(err, result) {});
+    user.save(function(err, result) {
+      result.token = jwt.sign(result, config.secret);
+      token = result.token;
+      result.save(function(err, doc) {});
       done();
     });
   });
 
   after(function() {
-    User.collection.drop();
+    seeds.clear();
   });
 
   it('returns a list of offers', function(done) {
     request(app)
       .get('/offers')
       .set('Authorization', 'Bearer ' + token)
+      .expect(200)
       .end(function(err, res) {
-        assert.equal(res.statusCode, 200);
+        assert.equal(res.body.offers.length, 1);
         done();
       });
   });

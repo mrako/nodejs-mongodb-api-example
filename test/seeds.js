@@ -7,8 +7,8 @@ var Offer = require('../app/models/offer');
 
 module.exports = {
   clear: function() {
-    User.remove({}, function(err) {});
-    Offer.remove({}, function(err) {});
+    Offer.collection.drop();
+    User.collection.drop();
   },
   createOffer: function() {
     Offer.create({
