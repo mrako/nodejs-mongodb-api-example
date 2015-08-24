@@ -19,6 +19,8 @@
     "jsonwebtoken": "^5.0.5",
     "mongoose": "^4.1.3",
     "morgan": "^1.6.1",
+    "multer": "^1.0.3",
+    "multer-s3": "^1.3.0",
     "orientjs": "^2.0.0",
     "passport": "^0.3.0",
     "passport-http-bearer": "^1.0.1",

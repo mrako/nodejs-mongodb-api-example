@@ -6,7 +6,6 @@ var bodyParser = require('body-parser');
 
 var cors = require('./app/cors');
 
-
 var config = require('./app/config');
 mongoose.connect(config.database);
 

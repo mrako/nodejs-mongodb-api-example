@@ -55,6 +55,7 @@ describe('Offers', function() {
       });
   });
 
+
   it('creates a new offer', function(done) {
     var today = new Date();
     var nextweek = new Date(today.getFullYear(), today.getMonth(), today.getDate()+7);
@@ -62,18 +63,32 @@ describe('Offers', function() {
     request(app)
       .post('/offers')
       .send({
-        name: 'Five fine vacuum cleaners for sale!',
+        name: 'A vacuum cleaner for sale',
         product: {
-          name: 'Electrolux Ergorapido',
+          name: 'Dyson v6',
           price: 139
         },
         expires: nextweek,
-        products: 5
+        products: 1
       })
       .set('Authorization', 'Bearer ' + token)
       .expect(200)
       .end(function(err, res) {
-        assert.equal(res.body.offer.product.name, 'Electrolux Ergorapido');
+        assert.equal(res.body.offer.product.name, 'Dyson v6');
+        done();
+      });
+  });
+
+  it('attaches an image to the offer', function(done) {
+    request(app)
+      .post('/offers')
+      .field('name', 'Five fine vacuum cleaners for sale!')
+      .field('product[name]', 'Dyson Cinetic')
+      .attach('image', 'test/fixtures/dyson.jpg')
+      .set('Authorization', 'Bearer ' + token)
+      .expect(200)
+      .end(function(err, res) {
+        assert.equal(res.body.offer.product.name, 'Dyson Cinetic');
         done();
       });
   });

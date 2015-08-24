@@ -3,6 +3,8 @@
 var passport = require('passport');
 var BearerStrategy = require('passport-http-bearer').Strategy;
 
+var aws = require('./controllers/aws');
+
 var AuthenticationCtrl = require('./controllers/authentication');
 var OffersCtrl = require('./controllers/offers');
 
@@ -30,7 +32,7 @@ module.exports = function(app) {
     OffersCtrl.list(req, res);
   });
 
-  app.post('/offers', passport.authenticate('bearer', {session: false}), function(req, res) {
+  app.post('/offers', passport.authenticate('bearer', {session: false}), aws.upload.single('image'), function(req, res) {
     OffersCtrl.create(req, res);
   });
 };

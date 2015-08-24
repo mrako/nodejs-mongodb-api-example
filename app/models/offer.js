@@ -5,7 +5,7 @@ module.exports = mongoose.model('Offer', {
   product : {
     id: String,
     name: String,
-    imageUrl: String,
+    images: Array,
     price: Number
   },
   expires: Date,
