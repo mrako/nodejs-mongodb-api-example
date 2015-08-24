@@ -35,6 +35,15 @@ describe('Offers', function() {
     seeds.clear();
   });
 
+  it('should authenticate user', function(done) {
+    request(app)
+      .get('/offers')
+      .expect(403)
+      .end(function(err, res) {
+        done();
+      });
+  });
+
   it('returns a list of offers', function(done) {
     request(app)
       .get('/offers')
