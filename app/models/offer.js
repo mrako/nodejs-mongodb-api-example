@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 module.exports = mongoose.model('Offer', {
   name : String,
-  model : {
+  product : {
     id: String,
     name: String,
     imageUrl: String,

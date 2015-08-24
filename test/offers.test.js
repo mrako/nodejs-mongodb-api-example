@@ -45,4 +45,27 @@ describe('Offers', function() {
         done();
       });
   });
+
+  it('creates a new offer', function(done) {
+    var today = new Date();
+    var nextweek = new Date(today.getFullYear(), today.getMonth(), today.getDate()+7);
+
+    request(app)
+      .post('/offers')
+      .send({
+        name: 'Five fine vacuum cleaners for sale!',
+        product: {
+          name: 'Electrolux Ergorapido',
+          price: 139
+        },
+        expires: nextweek,
+        products: 5
+      })
+      .set('Authorization', 'Bearer ' + token)
+      .expect(200)
+      .end(function(err, res) {
+        assert.equal(res.body.offer.product.name, 'Electrolux Ergorapido');
+        done();
+      });
+  });
 });
