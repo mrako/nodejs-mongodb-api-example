@@ -46,7 +46,7 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('serve', ['express:dev', 'open', 'watch']);
+  grunt.registerTask('serve', ['express:dev', 'watch']);
   grunt.registerTask('test', ['mochaTest']);
   grunt.registerTask('default', ['jshint', 'test']);
 

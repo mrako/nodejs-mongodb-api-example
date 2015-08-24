@@ -11,7 +11,6 @@ var OffersCtrl = require('./controllers/offers');
 var User = require('./models/user');
 
 module.exports = function(app) {
-
   passport.use(new BearerStrategy(function(token, done) {
     User.findOne({ token: token }, function (err, user) {
       if (err) { return done(err); }

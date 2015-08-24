@@ -94,7 +94,6 @@ describe('Offers', function() {
       .field('name', 'Five fine vacuum cleaners for sale!')
       .field('product[name]', 'Dyson Cinetic')
       .attach('image', 'test/fixtures/dyson.jpg')
-      .set('Accept', 'application/json')
       .set('Authorization', 'Bearer ' + token)
       .expect(200)
       .end(function(err, res) {
