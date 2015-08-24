@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
 
+var passport = require('passport');
+
 var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
@@ -14,6 +16,7 @@ var app = express();
 app.use(cors);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(passport.initialize());
 
 require('./app/routes.js')(app);
 
