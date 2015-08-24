@@ -15,7 +15,7 @@ var auth = {
       if (err) {
         res.json({
           type: false,
-          data: "Error occured: " + err
+          data: 'Error occured: ' + err
         });
       } else {
         if (user) {
@@ -27,7 +27,7 @@ var auth = {
         } else {
           res.json({
             type: false,
-            data: "Incorrect email/password"
+            data: 'Incorrect email/password'
           });
         }
       }
@@ -41,13 +41,13 @@ var auth = {
       if (err) {
         res.json({
           type: false,
-          data: "Error occured: " + err
+          data: 'Error occured: ' + err
         });
       } else {
         if (user) {
           res.json({
             type: false,
-            data: "User already exists!"
+            data: 'User already exists!'
           });
         } else {
           var userModel = new User();
@@ -62,7 +62,7 @@ var auth = {
                 token: user1.token
               });
             });
-          })
+          });
         }
       }
     });

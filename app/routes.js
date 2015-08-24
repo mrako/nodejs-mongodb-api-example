@@ -3,12 +3,10 @@
 var passport = require('passport');
 var BearerStrategy = require('passport-http-bearer').Strategy;
 
-var Authentication = require('./controllers/authentication');
-
-var config = require('./config');
+var AuthenticationCtrl = require('./controllers/authentication');
+var OffersCtrl = require('./controllers/offers');
 
 var User = require('./models/user');
-var Offer = require('./models/offer');
 
 module.exports = function(app) {
 
@@ -21,22 +19,18 @@ module.exports = function(app) {
   }));
 
   app.post('/login', function(req, res) {
-    Authentication.login(req, res);
+    AuthenticationCtrl.login(req, res);
   });
 
   app.post('/signin', function(req, res) {
-    Authentication.signin(req, res);
+    AuthenticationCtrl.signin(req, res);
   });
 
-  app.get('/offers', passport.authenticate('bearer', {
-    session: false
-  }), function(req, res) {
-    Offer.find(function(err, offers) {
-      if (err) {
-        res.send(err);
-      }
+  app.get('/offers', passport.authenticate('bearer', {session: false}), function(req, res) {
+    OffersCtrl.list(req, res);
+  });
 
-      res.json({offers: offers});
-    });
+  app.post('/offers', passport.authenticate('bearer', {session: false}), function(req, res) {
+    OffersCtrl.create(req, res);
   });
 };
