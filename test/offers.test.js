@@ -1,20 +1,29 @@
 var assert = require('assert');
 var request = require('supertest');
+var mockery = require('mockery');
 
 var jwt = require('jsonwebtoken');
 var config = require('../app/config');
-
-var app = require('../app');
 
 var seeds = require('./seeds');
 
 var Offer = require("../app/models/offer");
 var User = require("../app/models/user");
 
-describe('Offers', function() {
-  var token;
+var awsMock = require("./mocks/aws");
 
-  before(function(done) {
+describe('Offers', function() {
+  var app, token;
+
+  before(function() {
+    mockery.enable({
+      warnOnUnregistered: false,
+      useCleanCache: true
+    });
+    mockery.registerMock('./controllers/aws', awsMock);
+
+    app = require('../app');
+
     seeds.clear();
     seeds.createOffer();
 
@@ -27,12 +36,12 @@ describe('Offers', function() {
       result.token = jwt.sign(result, config.secret);
       token = result.token;
       result.save(function(err, doc) {});
-      done();
     });
   });
 
   after(function() {
     seeds.clear();
+    mockery.disable();
   });
 
   it('should authenticate user', function(done) {
@@ -58,7 +67,7 @@ describe('Offers', function() {
 
   it('creates a new offer', function(done) {
     var today = new Date();
-    var nextweek = new Date(today.getFullYear(), today.getMonth(), today.getDate()+7);
+    var nextweek = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7);
 
     request(app)
       .post('/offers')
@@ -85,6 +94,7 @@ describe('Offers', function() {
       .field('name', 'Five fine vacuum cleaners for sale!')
       .field('product[name]', 'Dyson Cinetic')
       .attach('image', 'test/fixtures/dyson.jpg')
+      .set('Accept', 'application/json')
       .set('Authorization', 'Bearer ' + token)
       .expect(200)
       .end(function(err, res) {

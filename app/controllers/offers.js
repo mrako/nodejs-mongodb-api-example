@@ -15,6 +15,8 @@ var offers = {
   create: function(req, res) {
     var offer = new Offer(req.body);
     
+    console.log(req.body);
+    
     if (req.file) {
       offer.product.images = [req.file.key];
     }

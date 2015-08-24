@@ -1,13 +1,14 @@
 var assert = require('assert');
 var request = require('supertest');
 
-var app = require('../app');
-
 var User = require("../app/models/user");
 
 describe("Authentication", function() {
+  var app;
 
   before(function() {
+    app = require('../app');
+
     var user = new User({
       email: 'me@mrako.com',
       password: 'test'
@@ -18,6 +19,7 @@ describe("Authentication", function() {
 
   after(function() {
     User.collection.drop();
+    app = null;
   });
 
   it('finds a user by username', function() {

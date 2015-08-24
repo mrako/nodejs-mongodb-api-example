@@ -38,6 +38,8 @@
     "http-status": "^0.2.0",
     "load-grunt-tasks": "^3.2.0",
     "mocha": "^2.2.5",
+    "mockery": "^1.4.0",
+    "module-loader": "0.0.8",
     "superagent": "^1.3.0",
     "supertest": "^1.0.1"
   }
