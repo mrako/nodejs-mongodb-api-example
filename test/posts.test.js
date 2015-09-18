@@ -66,9 +66,6 @@ describe('Posts', function() {
 
 
   it('creates a new post', function(done) {
-    var today = new Date();
-    var nextweek = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7);
-
     request(app)
       .post('/posts')
       .send({
