@@ -2,6 +2,7 @@
 
 var passport = require('passport');
 var BearerStrategy = require('passport-http-bearer').Strategy;
+var LocalStrategy = require('passport-local').Strategy;
 
 var aws = require('./controllers/aws');
 
@@ -18,9 +19,16 @@ module.exports = function(app) {
       return done(null, user, { scope: 'all' });
     });
   }));
+  passport.use(new LocalStrategy(User.authenticate()));
+  passport.serializeUser(User.serializeUser());
+  passport.deserializeUser(User.deserializeUser());
 
-  app.post('/login', function(req, res) {
-    AuthenticationCtrl.login(req, res);
+  app.post('/login', passport.authenticate('local'), function(req, res) {
+    res.json({
+      type: true,
+      data: res.user,
+      token: res.user.token
+    });
   });
 
   app.post('/signup', function(req, res) {

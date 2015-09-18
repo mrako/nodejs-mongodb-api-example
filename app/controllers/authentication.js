@@ -1,5 +1,6 @@
 'use strict';
 
+var passport = require('passport');
 var jwt = require('jsonwebtoken');
 
 var config = require('../config');
@@ -34,7 +35,30 @@ var auth = {
     });
   },
   signup: function(req, res) {
-    User.findOne({
+    console.log(req.body);
+    User.register(new User({ username : req.body.username }), req.body.password, function(err, user) {
+      if (err) {
+        res.json({
+          type: false,
+          data: 'User already exists!'
+        });
+      }
+    
+      console.log(res.user);
+
+      passport.authenticate('local')(req, res, function () {
+        res.user.token = jwt.sign(res.user, config.secret);
+        res.user.save(function(err, user1) {
+          console.log(user1);
+          res.json({
+            type: true,
+            data: user1,
+            token: user1.token
+          });
+        });
+      });
+    });
+/*    User.findOne({
       email: req.body.email,
       password: req.body.password
     }, function(err, user) {
@@ -65,7 +89,7 @@ var auth = {
           });
         }
       }
-    });
+    });*/
   }
 };
 
