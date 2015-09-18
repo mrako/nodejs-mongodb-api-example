@@ -44,7 +44,7 @@ describe('Posts', function() {
     mockery.disable();
   });
 
-  it('should authenticate user', function(done) {
+  it('should need an authenticated user to get posts', function(done) {
     request(app)
       .get('/posts')
       .expect(403)
