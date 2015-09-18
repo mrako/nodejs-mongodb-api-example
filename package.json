@@ -3,9 +3,10 @@
   "version": "0.0.1",
   "description": "nodejs mongodb api example",
   "homepage": "",
+  "license": "ISC",
   "author": {
-    "name": "",
-    "email": ""
+    "name": "Marko Klemetti",
+    "email": "marko.klemetti@gmail.com"
   },
   "repository": {
     "type": "git",
@@ -21,13 +22,11 @@
     "morgan": "^1.6.1",
     "multer": "^1.0.3",
     "multer-s3": "^1.3.0",
-    "orientjs": "^2.0.0",
     "passport": "^0.3.0",
     "passport-http-bearer": "^1.0.1",
-    "passport-local-mongoose": "^1.0.1"
+    "passport-local-mongoose": "^2.0.0"
   },
   "devDependencies": {
-    "acquit": "^0.1.0",
     "append-field": "^0.1.0",
     "busboy": "^0.2.9",
     "grunt": "^0.4.5",
@@ -42,7 +41,6 @@
     "mocha": "^2.2.5",
     "mockery": "^1.4.0",
     "module-loader": "0.0.8",
-    "superagent": "^1.3.0",
     "supertest": "^1.0.1",
     "type-is": "^1.6.7"
   }
