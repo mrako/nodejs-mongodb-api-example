@@ -26,8 +26,7 @@ module.exports = function(app) {
   app.post('/login', passport.authenticate('local'), function(req, res) {
     res.json({
       type: true,
-      data: res.user,
-      token: res.user.token
+      token: req.user.token
     });
   });
 

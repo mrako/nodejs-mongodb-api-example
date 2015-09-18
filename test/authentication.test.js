@@ -1,20 +1,23 @@
 var assert = require('assert');
 var request = require('supertest');
 
+var jwt = require('jsonwebtoken');
+var config = require('../app/config');
+
 var User = require("../app/models/user");
 
 describe("Authentication", function() {
   var app;
 
-  before(function() {
+  before(function(done) {
     app = require('../app');
 
-    var user = new User({
-      email: 'me@mrako.com',
-      password: 'test'
+    User.register(new User({ username : 'me@mrako.com' }), 'test', function(err, user) {
+      user.token = jwt.sign(user, config.secret);
+      user.save(function(err, us) {
+        done();
+      });
     });
-
-    user.save(function(err, results) {});
   });
 
   after(function() {
@@ -24,9 +27,9 @@ describe("Authentication", function() {
 
   it('finds a user by username', function() {
     User.findOne({
-      email: 'me@mrako.com'
+      username: 'me@mrako.com'
     }, function(err, user) {
-      assert.equal(user.email, 'me@mrako.com');
+      assert.equal(user.username, 'me@mrako.com');
     });
   });
 

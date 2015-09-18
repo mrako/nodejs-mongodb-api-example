@@ -15,7 +15,7 @@ var awsMock = require("./mocks/aws");
 describe('Posts', function() {
   var app, token;
 
-  before(function() {
+  before(function(done) {
     mockery.enable({
       warnOnUnregistered: false,
       useCleanCache: true
@@ -27,15 +27,12 @@ describe('Posts', function() {
     seeds.clear();
     seeds.createPost();
 
-    var user = new User({
-      email: 'other@mrako.com',
-      password: 'test'
-    });
-
-    user.save(function(err, result) {
-      result.token = jwt.sign(result, config.secret);
-      token = result.token;
-      result.save(function(err, doc) {});
+    User.register(new User({ username : 'me@mrako.com' }), 'test', function(err, user) {
+      user.token = jwt.sign(user, config.secret);
+      user.save(function(err, us) {
+        token = us.token;
+        done();
+      });
     });
   });
 
