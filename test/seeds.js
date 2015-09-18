@@ -13,14 +13,8 @@ module.exports = {
   createPost: function() {
     Post.create({
       id: '11:0',
-      model: {
-        id: '12:7',
-        name: 'kahvinkeitin',
-        imageUrl: '',
-        price: 100
-      },
-      expires: new Date(),
-      products: 5
+      name: 'I fell asleep on the sofa again.',
+      description: '',
     }, function(err) {});
   }
 };
