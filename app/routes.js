@@ -6,7 +6,7 @@ var BearerStrategy = require('passport-http-bearer').Strategy;
 var aws = require('./controllers/aws');
 
 var AuthenticationCtrl = require('./controllers/authentication');
-var OffersCtrl = require('./controllers/offers');
+var PostsCtrl = require('./controllers/posts');
 
 var User = require('./models/user');
 
@@ -27,11 +27,11 @@ module.exports = function(app) {
     AuthenticationCtrl.signin(req, res);
   });
 
-  app.get('/offers', passport.authenticate('bearer', {session: false}), function(req, res) {
-    OffersCtrl.list(req, res);
+  app.get('/posts', passport.authenticate('bearer', {session: false}), function(req, res) {
+    PostsCtrl.list(req, res);
   });
 
-  app.post('/offers', passport.authenticate('bearer', {session: false}), aws.upload.single('image'), function(req, res) {
-    OffersCtrl.create(req, res);
+  app.post('/posts', passport.authenticate('bearer', {session: false}), aws.upload.single('image'), function(req, res) {
+    PostsCtrl.create(req, res);
   });
 };

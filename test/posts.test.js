@@ -7,12 +7,12 @@ var config = require('../app/config');
 
 var seeds = require('./seeds');
 
-var Offer = require("../app/models/offer");
+var Post = require("../app/models/post");
 var User = require("../app/models/user");
 
 var awsMock = require("./mocks/aws");
 
-describe('Offers', function() {
+describe('Posts', function() {
   var app, token;
 
   before(function() {
@@ -25,7 +25,7 @@ describe('Offers', function() {
     app = require('../app');
 
     seeds.clear();
-    seeds.createOffer();
+    seeds.createPost();
 
     var user = new User({
       email: 'other@mrako.com',
@@ -46,58 +46,53 @@ describe('Offers', function() {
 
   it('should authenticate user', function(done) {
     request(app)
-      .get('/offers')
+      .get('/posts')
       .expect(403)
       .end(function(err, res) {
         done();
       });
   });
 
-  it('returns a list of offers', function(done) {
+  it('returns a list of posts', function(done) {
     request(app)
-      .get('/offers')
+      .get('/posts')
       .set('Authorization', 'Bearer ' + token)
       .expect(200)
       .end(function(err, res) {
-        assert.equal(res.body.offers.length, 1);
+        assert.equal(res.body.posts.length, 1);
         done();
       });
   });
 
 
-  it('creates a new offer', function(done) {
+  it('creates a new post', function(done) {
     var today = new Date();
     var nextweek = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7);
 
     request(app)
-      .post('/offers')
+      .post('/posts')
       .send({
-        name: 'A vacuum cleaner for sale',
-        product: {
-          name: 'Dyson v6',
-          price: 139
-        },
-        expires: nextweek,
-        products: 1
+        name: 'An example post',
+        description: "A description of my post."
       })
       .set('Authorization', 'Bearer ' + token)
       .expect(200)
       .end(function(err, res) {
-        assert.equal(res.body.offer.product.name, 'Dyson v6');
+        assert.equal(res.body.post.name, 'An example post');
         done();
       });
   });
 
-  it('attaches an image to the offer', function(done) {
+  it('attaches an image to the post', function(done) {
     request(app)
-      .post('/offers')
-      .field('name', 'Five fine vacuum cleaners for sale!')
-      .field('product[name]', 'Dyson Cinetic')
+      .post('/posts')
+      .field('name', 'Another example post')
+      .field('description', 'Another description')
       .attach('image', 'test/fixtures/dyson.jpg')
       .set('Authorization', 'Bearer ' + token)
       .expect(200)
       .end(function(err, res) {
-        assert.equal(res.body.offer.product.name, 'Dyson Cinetic');
+        assert.equal(res.body.post.name, 'Another example post');
         done();
       });
   });

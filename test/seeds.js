@@ -3,15 +3,15 @@
 var mongoose = require('mongoose');
 
 var User = require('../app/models/user');
-var Offer = require('../app/models/offer');
+var Post = require('../app/models/post');
 
 module.exports = {
   clear: function() {
-    Offer.collection.drop();
+    Post.collection.drop();
     User.collection.drop();
   },
-  createOffer: function() {
-    Offer.create({
+  createPost: function() {
+    Post.create({
       id: '11:0',
       model: {
         id: '12:7',
