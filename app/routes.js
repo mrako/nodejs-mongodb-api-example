@@ -23,8 +23,8 @@ module.exports = function(app) {
     AuthenticationCtrl.login(req, res);
   });
 
-  app.post('/signin', function(req, res) {
-    AuthenticationCtrl.signin(req, res);
+  app.post('/signup', function(req, res) {
+    AuthenticationCtrl.signup(req, res);
   });
 
   app.get('/posts', passport.authenticate('bearer', {session: false}), function(req, res) {

@@ -33,7 +33,7 @@ var auth = {
       }
     });
   },
-  signin: function(req, res) {
+  signup: function(req, res) {
     User.findOne({
       email: req.body.email,
       password: req.body.password
