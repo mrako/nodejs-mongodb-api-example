@@ -72,13 +72,13 @@ describe('Posts', function() {
     request(app)
       .post('/posts')
       .send({
-        name: 'An example post',
-        description: "A description of my post."
+        name: 'I fell asleep on the couch again',
+        description: "Oh my first world problems"
       })
       .set('Authorization', 'Bearer ' + token)
       .expect(200)
       .end(function(err, res) {
-        assert.equal(res.body.post.name, 'An example post');
+        assert.equal(res.body.post.name, 'I fell asleep on the couch again');
         done();
       });
   });
@@ -86,13 +86,13 @@ describe('Posts', function() {
   it('attaches an image to the post', function(done) {
     request(app)
       .post('/posts')
-      .field('name', 'Another example post')
-      .field('description', 'Another description')
+      .field('name', 'Ran out of coffee')
+      .field('description', 'So I had to combine two types.')
       .attach('image', 'test/fixtures/dyson.jpg')
       .set('Authorization', 'Bearer ' + token)
       .expect(200)
       .end(function(err, res) {
-        assert.equal(res.body.post.name, 'Another example post');
+        assert.equal(res.body.post.name, 'Ran out of coffee');
         done();
       });
   });

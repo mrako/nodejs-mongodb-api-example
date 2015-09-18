@@ -37,7 +37,7 @@
 
     curl -H "Authorization: Bearer <yourbearertoken>" http://localhost:9000/posts
 
-    curl -H "Authorization: Bearer <yourbearertoken>" --data "name='Five fine vacuum cleaners for sale!'" http://localhost:9000/posts
+    curl -H "Authorization: Bearer <yourbearertoken>" --data "name='I should print a boat'" http://localhost:9000/posts
 
 ### Heroku
 
